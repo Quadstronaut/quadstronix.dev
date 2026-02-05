@@ -5,8 +5,8 @@ LOG_FILE="/var/log/update_crafty.log"
 # Redirect all following output to the log file AND show it in the terminal
 exec > >(tee -a "$LOG_FILE") 2>&1
 
-PROJECT_DIR="/opt/crafty/docker"
-DATA_DIR="/opt/crafty"
+PROJECT_DIR="/home/debian/crafty/docker"
+DATA_DIR="/home/debian/crafty"
 
 # Move to the directory
 cd "$PROJECT_DIR" || exit 1
