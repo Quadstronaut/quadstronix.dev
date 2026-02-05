@@ -3,6 +3,7 @@
 
 # But do NOT ignore the scripts folder
 !/scripts/
+!/opt/
 
 # If you want to ignore specific things INSIDE scripts (like temporary files), 
 # you can add them below, otherwise this will sync the whole folder.
