@@ -1,0 +1,27 @@
+services:
+  syncthing:
+    image: syncthing/syncthing:latest
+    container_name: sync
+    hostname: quadstronix-sync
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./data:/var/syncthing
+      - ./config:/var/syncthing/config
+    ports:
+      - "22000:22000/tcp" # TCP sync traffic
+      - "22000:22000/udp" # QUIC sync traffic
+      - "21027:21027/udp" # Local discovery
+    networks:
+      - caddy_net
+    restart: always
+    healthcheck:
+      test: curl -fkLsS -m 2 127.0.0.1:8384/rest/noauth/health | grep -o --color=never OK || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 3
+
+networks:
+  caddy_net:
+    external: true

@@ -1,0 +1,11 @@
+services:
+  url-to-png:
+    image: ghcr.io/jasonraimondi/url-to-png:latest
+    container_name: url-to-png
+    restart: always
+    networks:
+      - caddy_net
+
+networks:
+  caddy_net:
+    external: true
