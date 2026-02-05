@@ -1,28 +1,37 @@
 # Ignore everything by default
 /*
 
-# whitelist custom tools and containers
+# Whitelist custom tools and containers
 !/scripts/
 !/containers/
 
-# --- PRIVACY: Ignore the Caddyfile ---
-# This file contains private IPs for whitelisting
+# --- PRIVACY & SECRETS ---
+# Ignore the Caddyfile and all secret environment files
 **/caddy/Caddyfile
-
-# --- DATA: Ignore sensitive files ---
 *.env
 
-# --- DATA: Ignore heavy/dynamic files ---
+# --- CONTAINER DATA (Ignore heavy/dynamic files) ---
+
+# Caddy
 **/caddy_data/
 **/caddy_config/
+
+# Uptime Kuma
 **/uptime-kuma/data/
+
+# Crafty (Ignore all server files, backups, and the database)
+**/crafty/import/
+**/crafty/backups/
+**/crafty/logs/
+**/crafty/servers/
 **/crafty/docker/
 
-# General binary/log data
+# Syncthing (Ignore the actual synced data and internal database)
+**/containers/syncthing/data/
+**/containers/syncthing/config/
+
+# --- GENERAL CLUTTER ---
 **/*.log
 **/*.db
 **/*.sqlite
 .DS_Store
-
-# Minecraft DB
-**/containers/crafty/docker/config/db/
