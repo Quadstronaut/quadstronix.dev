@@ -1,9 +1,25 @@
 # Ignore everything by default
 /*
 
-# But do NOT ignore the scripts folder
+# whitelist custom tools and containers
 !/scripts/
-!/opt/
+!/containers/
 
-# If you want to ignore specific things INSIDE scripts (like temporary files), 
-# you can add them below, otherwise this will sync the whole folder.
+# --- PRIVACY: Ignore the Caddyfile ---
+# This file contains private IPs for whitelisting
+**/caddy/Caddyfile
+
+# --- DATA: Ignore heavy/dynamic files ---
+**/caddy_data/
+**/caddy_config/
+**/uptime-kuma/data/
+**/crafty/import/
+**/crafty/backups/
+**/crafty/logs/
+**/crafty/servers/
+
+# General binary/log data
+**/*.log
+**/*.db
+**/*.sqlite
+.DS_Store
