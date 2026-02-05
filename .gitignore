@@ -16,13 +16,13 @@
 **/caddy_data/
 **/caddy_config/
 **/uptime-kuma/data/
-**/crafty/docker/import/
-**/crafty/docker/backups/
-**/crafty/docker/logs/
-**/crafty/docker/servers/
+**/crafty/docker/
 
 # General binary/log data
 **/*.log
 **/*.db
 **/*.sqlite
 .DS_Store
+
+# Minecraft DB
+**/containers/crafty/docker/config/db/
