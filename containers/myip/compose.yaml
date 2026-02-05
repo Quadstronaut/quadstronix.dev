@@ -1,0 +1,11 @@
+services:
+  myip:
+    image: jason5ng32/myip:latest
+    container_name: myip
+    restart: always
+    networks:
+      - caddy_net
+
+networks:
+  caddy_net:
+    external: true
