@@ -26,6 +26,9 @@
 **/crafty/servers/
 **/crafty/docker/
 
+# LinkStack site files
+**/linkstack/htdocs/
+
 # Syncthing (Ignore the actual synced data and internal database)
 **/containers/syncthing/data/
 **/containers/syncthing/config/
