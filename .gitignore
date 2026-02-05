@@ -9,6 +9,9 @@
 # This file contains private IPs for whitelisting
 **/caddy/Caddyfile
 
+# --- DATA: Ignore sensitive files ---
+*.env
+
 # --- DATA: Ignore heavy/dynamic files ---
 **/caddy_data/
 **/caddy_config/
