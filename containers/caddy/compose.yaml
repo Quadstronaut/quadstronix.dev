@@ -2,7 +2,7 @@ services:
   caddy:
     build: .
     container_name: caddy
-    restart: unless-stopped
+    restart: always
     env_file: .env
     ports:
       - "80:80"
@@ -13,6 +13,7 @@ services:
       - PORKBUN_API_SECRET_KEY=${PORKBUN_API_SECRET_KEY}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./Caddyfile.d:/etc/caddy/Caddyfile.d
       - caddy_data:/data
       - caddy_config:/config
     networks:
