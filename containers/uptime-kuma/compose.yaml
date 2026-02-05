@@ -1,0 +1,16 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: unless-stopped
+    networks:
+      - caddy_net # Join the shared network
+    volumes:
+      - uptime_kuma_data:/app/data
+
+networks:
+  caddy_net:
+    external: true
+
+volumes:
+  uptime_kuma_data:
