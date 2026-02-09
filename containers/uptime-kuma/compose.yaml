@@ -3,10 +3,13 @@ services:
     image: louislam/uptime-kuma:latest
     container_name: kuma
     restart: always
+    security_opt:
+      - no-new-privileges:true # Protection since container now has direct communication with Docker engine
     networks:
       - caddy_net
     volumes:
       - uptime_kuma_data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounts the socket in read-only mode
 
 networks:
   caddy_net:

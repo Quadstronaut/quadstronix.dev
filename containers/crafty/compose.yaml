@@ -6,7 +6,6 @@ services:
     environment:
       - TZ=America/Phoenix
     ports:
-      # Port 8443 removed from here; it's now private to caddy_net
       - "25565:25565/tcp" # JoJo Winds of Reqium
       - "25566:25566/tcp" # AOT Helos
       - "24454:24454/udp" # Voice Chat AOT Helos
@@ -20,6 +19,10 @@ services:
       - ./docker/import:/crafty/import
     networks:
       - caddy_net
+    deploy:
+      resources:
+        limits:
+          memory: 20G
 
 networks:
   caddy_net:
