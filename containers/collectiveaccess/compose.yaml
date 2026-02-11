@@ -1,0 +1,47 @@
+services:
+  collectiveaccess:
+    image: collectiveaccess/providence:latest
+    container_name: collectiveaccess
+    hostname: collectiveaccess
+    restart: always
+    environment:
+      - CA_DB_HOST=collectiveaccess-db
+      - CA_DB_USER=collectiveaccess
+      - CA_DB_PASSWORD=${CA_DB_PASSWORD}
+      - CA_DB_DATABASE=collectiveaccess
+      - CA_ADMIN_EMAIL=${CA_ADMIN_EMAIL}
+      - CA_ADMIN_PASSWORD=${CA_ADMIN_PASSWORD}
+      - TZ=America/Phoenix
+    networks:
+      - caddy_net
+      - collectiveaccess_internal
+    volumes:
+      - collectiveaccess-media:/var/www/html/media
+      - collectiveaccess-vendor:/var/www/html/vendor
+    depends_on:
+      - collectiveaccess-db
+
+  collectiveaccess-db:
+    image: mariadb:11
+    container_name: collectiveaccess-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${CA_DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=collectiveaccess
+      - MYSQL_USER=collectiveaccess
+      - MYSQL_PASSWORD=${CA_DB_PASSWORD}
+    networks:
+      - collectiveaccess_internal
+    volumes:
+      - collectiveaccess-db-data:/var/lib/mysql
+
+networks:
+  caddy_net:
+    external: true
+  collectiveaccess_internal:
+    internal: true
+
+volumes:
+  collectiveaccess-media:
+  collectiveaccess-vendor:
+  collectiveaccess-db-data:

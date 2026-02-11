@@ -1,0 +1,22 @@
+services:
+  atomic-server:
+    image: joepmeneer/atomic-server:latest
+    container_name: atomic
+    hostname: atomic
+    restart: always
+    environment:
+      - ATOMIC_DOMAIN=atomic.quadstronix.dev
+      - ATOMIC_INITIALIZE=true
+      - ATOMIC_DATA_DIR=/atomic-storage
+    networks:
+      - caddy_net
+    volumes:
+      - atomic-server-data:/atomic-storage
+    command: ["--port", "80", "--https", "false"]
+
+networks:
+  caddy_net:
+    external: true
+
+volumes:
+  atomic-server-data:
