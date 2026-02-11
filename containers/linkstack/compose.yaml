@@ -11,7 +11,8 @@ services:
       - PHP_MEMORY_LIMIT=512M
       - UPLOAD_MAX_FILESIZE=16M
     volumes:
-      - ./htdocs:/htdocs
+      - source: linkstack
+        target: /htdocs
     networks:
       - caddy_net
 

@@ -33,6 +33,8 @@ services:
     restart: always
     networks:
       - caddy_net
+    volumes:
+      - /home/debian/.ssh/id_ed25519:/wiki/data/id_rsa:ro
 
 networks:
   caddy_net:
