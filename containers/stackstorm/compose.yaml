@@ -1,0 +1,80 @@
+services:
+  stackstorm:
+    image: stackstorm/stackstorm:latest
+    container_name: stackstorm
+    hostname: stackstorm
+    restart: always
+    environment:
+      - ST2_USER=admin
+      - ST2_PASSWORD=${ST2_PASSWORD:-ChangeMeStackStorm123!}
+      - MONGO_HOST=stackstorm-mongo
+      - MONGO_PORT=27017
+      - RABBITMQ_HOST=stackstorm-rabbitmq
+      - RABBITMQ_PORT=5672
+      - POSTGRES_HOST=stackstorm-postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=stackstorm
+      - POSTGRES_USER=stackstorm
+      - POSTGRES_PASSWORD=${ST2_POSTGRES_PASSWORD:-ChangeMeDB123!}
+    networks:
+      - caddy_net
+      - stackstorm_internal
+    volumes:
+      - stackstorm-data:/var/lib/stackstorm
+      - stackstorm-packs:/opt/stackstorm/packs
+      - stackstorm-virtualenvs:/opt/stackstorm/virtualenvs
+      - stackstorm-configs:/opt/stackstorm/configs
+      - stackstorm-log:/var/log
+    depends_on:
+      - stackstorm-mongo
+      - stackstorm-rabbitmq
+      - stackstorm-postgres
+
+  stackstorm-mongo:
+    image: mongo:6
+    container_name: stackstorm-mongo
+    restart: always
+    networks:
+      - stackstorm_internal
+    volumes:
+      - stackstorm-mongo-data:/data/db
+      - stackstorm-mongo-config:/data/configdb
+
+  stackstorm-rabbitmq:
+    image: rabbitmq:3-management
+    container_name: stackstorm-rabbitmq
+    restart: always
+    networks:
+      - stackstorm_internal
+    volumes:
+      - stackstorm-rabbitmq-data:/var/lib/rabbitmq
+
+  stackstorm-postgres:
+    image: postgres:16-alpine
+    container_name: stackstorm-postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=stackstorm
+      - POSTGRES_USER=stackstorm
+      - POSTGRES_PASSWORD=${ST2_POSTGRES_PASSWORD:-ChangeMeDB123!}
+    networks:
+      - stackstorm_internal
+    volumes:
+      - stackstorm-postgres-data:/var/lib/postgresql/data
+
+networks:
+  caddy_net:
+    external: true
+  stackstorm_internal:
+    internal: true
+
+volumes:
+  stackstorm-data:
+  stackstorm-packs:
+  stackstorm-virtualenvs:
+  stackstorm-configs:
+  stackstorm-log:
+  stackstorm-mongo-data:
+  stackstorm-mongo-config:
+  stackstorm-rabbitmq-data:
+  stackstorm-postgres-data:
