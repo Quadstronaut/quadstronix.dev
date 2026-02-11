@@ -1,23 +1,24 @@
 services:
   linkstack:
-    image: linkstackorg/linkstack:latest
+    image: linkstackorg/linkstack
     container_name: links
-    restart: always
+    hostname: linkstack
     environment:
-      - TZ=America/Phoenix
-      - SERVER_ADMIN=khgreenprime@gmail.com
-      - HTTP_SERVER_NAME=links.quadstronix.dev
-      - HTTPS_SERVER_NAME=links.quadstronix.dev
-      - PHP_MEMORY_LIMIT=512M
-      - UPLOAD_MAX_FILESIZE=16M
-    volumes:
-      - linkstack:/htdocs
+      HTTP_SERVER_NAME: "links.quadstronix.dev"
+      HTTPS_SERVER_NAME: "links.quadstronix.dev"
+      SERVER_ADMIN: "khgreenprime@gmail.com"
+      TZ: "America/Phoenix"
+      PHP_MEMORY_LIMIT: "512M"
+      UPLOAD_MAX_FILESIZE: "8M"
     networks:
       - caddy_net
-
+    restart: always
+    volumes:
+      - "linkstack:/htdocs"
+      - "./entrypoint.sh:/custom-entrypoint.sh:ro"
+    entrypoint: ["/bin/sh", "/custom-entrypoint.sh"]
 networks:
   caddy_net:
     external: true
-
 volumes:
   linkstack:
